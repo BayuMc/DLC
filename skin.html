@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedrock Skin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #4a90e2, #1a5276); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            overflow-y: auto;
+        }
+        
+        .back-to-home-btn {
+            background-color: #2b6cb0; 
+            color: white;
+            padding: 0.7rem 1.2rem; 
+            border-radius: 9999px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            transition: all 0.3s ease;
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        .back-to-home-btn:hover {
+            background-color: #3f72af; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); 
+        }
+        .back-to-home-btn i {
+            margin-right: 0.4rem; 
+            font-size: 1.1rem; 
+        }
+
+        .search-container {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 0.8rem 1.2rem; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); 
+            max-width: 380px; 
+            width: 100%;
+            margin-bottom: 1.5rem; 
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.4rem 0.6rem; 
+            border-radius: 0.6rem; 
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 0.95rem; 
+            transition: background-color 0.3s ease;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .search-icon {
+            margin-right: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .addon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem; 
+            max-width: 380px; 
+            width: 100%;
+            padding-bottom: 20px;
+        }
+        .addon-item {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 1.2rem; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+        }
+        .addon-item:hover {
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); 
+        }
+        .addon-title {
+            font-size: 1.4rem; 
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem; 
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .addon-title:hover {
+            color: #60a5fa;
+        }
+        .addon-image-container {
+            width: 100%;
+            border-radius: 0.8rem; 
+            overflow: hidden;
+            margin-bottom: 0.5rem; 
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); 
+            border: 2px solid #3f72af; 
+        }
+        .addon-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .addon-tag {
+            display: none; 
+        }
+        .no-results {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2b6cb0;
+            border-radius: 1.2rem;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+        .delay-0 { animation-delay: 0s; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home-btn animate-slide-in delay-0">
+        <i class="fas fa-house"></i> Back
+    </a>
+
+    <div class="search-container animate-slide-in delay-2">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="addon-search" class="search-input" placeholder="Search">
+    </div>
+
+    <div id="addon-list-container" class="addon-list">
+
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/1QGJf0" target="_blank" class="addon-title" data-addon-name="Brainrot!">Brainrot!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2f7e3cd7-a1ba-431a-bec5-294597ad8ca6/Brainrot_thumbnail_0.jpg" alt="Brainrot!" class="addon-image">
+            </div>
+        </div>
+        
+        
+        
+    </div>
+
+    <div id="no-results-message" class="no-results hidden">
+        No Skin Pack here
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('addon-search');
+        const addonListContainer = document.getElementById('addon-list-container');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const addonItems = document.querySelectorAll('.addon-item'); 
+        function filterAddons() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let foundResults = false;
+
+            addonItems.forEach(item => {
+                const addonName = item.querySelector('.addon-title').dataset.addonName.toLowerCase();
+                if (addonName.includes(searchTerm)) {
+                    item.style.display = 'flex'; 
+                    foundResults = true;
+                } else {
+                    item.style.display = 'none'; 
+                }
+            });
+            if (foundResults) {
+                noResultsMessage.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.remove('hidden');
+            }
+        }
+        searchInput.addEventListener('keyup', filterAddons);
+        filterAddons();
+    </script>
+</body>
+</html>
