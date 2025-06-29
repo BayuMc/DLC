@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedrock Skin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #4a90e2, #1a5276); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            overflow-y: auto;
+        }
+        
+        .back-to-home-btn {
+            background-color: #2b6cb0; 
+            color: white;
+            padding: 0.7rem 1.2rem; 
+            border-radius: 9999px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            transition: all 0.3s ease;
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        .back-to-home-btn:hover {
+            background-color: #3f72af; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); 
+        }
+        .back-to-home-btn i {
+            margin-right: 0.4rem; 
+            font-size: 1.1rem; 
+        }
+
+        .search-container {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 0.8rem 1.2rem; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); 
+            max-width: 380px; 
+            width: 100%;
+            margin-bottom: 1.5rem; 
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.4rem 0.6rem; 
+            border-radius: 0.6rem; 
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 0.95rem; 
+            transition: background-color 0.3s ease;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .search-icon {
+            margin-right: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .addon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem; 
+            max-width: 380px; 
+            width: 100%;
+            padding-bottom: 20px;
+        }
+        .addon-item {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 1.2rem; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+        }
+        .addon-item:hover {
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); 
+        }
+        .addon-title {
+            font-size: 1.4rem; 
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem; 
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .addon-title:hover {
+            color: #60a5fa;
+        }
+        .addon-image-container {
+            width: 100%;
+            border-radius: 0.8rem; 
+            overflow: hidden;
+            margin-bottom: 0.5rem; 
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); 
+            border: 2px solid #3f72af; 
+        }
+        .addon-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .addon-tag {
+            display: none; 
+        }
+        .no-results {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2b6cb0;
+            border-radius: 1.2rem;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+        .delay-0 { animation-delay: 0s; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+    </style>
+</head>
+<body>
+    <a href="https://bayumc.github.io/DLC/" class="back-to-home-btn animate-slide-in delay-0">
+        <i class="fas fa-house"></i> Back
+    </a>
+
+    <div class="search-container animate-slide-in delay-2">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="addon-search" class="search-input" placeholder="Search">
+    </div>
+
+    <div id="addon-list-container" class="addon-list">
+        
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/5SKc0O" target="_blank" class="addon-title" data-addon-name="Angels Vs Devils">Angels Vs Devils</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/29262176-3f44-4d80-8701-261b7b4a5a66/AngelsVsDevils_Thumbnail_0.jpg" alt="Angels Vs Devils" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/IiJWEKil" target="_blank" class="addon-title" data-addon-name="Anime Idols">Anime Idols</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/b4e6b51a-3590-4c0c-a127-2605d58131b1/AnimeIdols6_Thumbnail_0.jpg" alt="Anime Idols" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/0SCqU6ao" target="_blank" class="addon-title" data-addon-name="Anime Kimono Style">Anime Kimono Style</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/34d0e650-f598-4925-9e1a-9708dd2f168c/AKS_Thumbnail_0.jpg" alt="Anime Kimono Style" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/I5YQ" target="_blank" class="addon-title" data-addon-name="ANIME KIMONO!">ANIME KIMONO!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/f62811a7-24da-46b6-b038-4c15c68f9077/ANIMEKimono_Thumbnail_0.jpg" alt="ANIME KIMONO!" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WG1cyGn" target="_blank" class="addon-title" data-addon-name="Anime Kimonos">Anime Kimonos</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/c16ba458-72c9-406b-a5d9-f10de987a335/AnimeKimonos_Thumbnail_0.jpg" alt="Anime Kimonos" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/PANv" target="_blank" class="addon-title" data-addon-name="Anime Ninjas">Anime Ninjas</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6eddcdd2-4be6-40e1-be02-c76ab1c365ae/AnimeNinjas_Thumbnail_0.jpg" alt="Anime Ninjas" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/uVwd" target="_blank" class="addon-title" data-addon-name="Bandana Ninjas">Bandana Ninjas</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0df7f82f-0777-427a-8d1f-8bcb2587b879/Thumbnail_0.jpg" alt="Bandana Ninjas" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/tuix" target="_blank" class="addon-title" data-addon-name="Bee Teens">Bee Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/59d74cbb-6563-4793-930a-cddd5fda539d/beeteens_thumbnail_0.jpg" alt="Bee Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Cvqjlq97" target="_blank" class="addon-title" data-addon-name="Black x White">Black x White</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e8ea0906-78ee-49f1-a73b-58ca0f35aa8f/Black_X_White_Thumbnail_0.jpg" alt="Black x White" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LImKKw" target="_blank" class="addon-title" data-addon-name="Black x White MEGA PACK">Black x White MEGA PACK</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d39864d2-363a-4514-af53-73f7c2334d3c/BlackxWhiteMEGAPACK_Thumbnail_0.jpg" alt="Black x White MEGA PACK" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/e85nO" target="_blank" class="addon-title" data-addon-name="Blindfold Baddies">Blindfold Baddies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/08ec38bf-8469-460a-bb19-571523943631/Thumbnail_0.jpg" alt="Blindfold Baddies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/jPCub" target="_blank" class="addon-title" data-addon-name="Blizzard Attire">Blizzard Attire</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/36854e2d-b09d-465f-9a15-1b9afa45a8e1/BlizzardAttire_Thumbnail_0.jpg" alt="Blizzard Attire" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Ft3bymjw" target="_blank" class="addon-title" data-addon-name="Bloom">Bloom</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/c6bd1c00-7e54-496f-a11b-b45e8d20c7d2/Bloom_Thumbnail_0.jpg" alt="Bloom" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/VTPvRS" target="_blank" class="addon-title" data-addon-name="Blue and Black">Blue and Black</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5d9b25b9-4ff7-416b-8e72-22a48debaa40/BlueandBlack_Thumbnail_0.jpg" alt="Blue and Black" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Rj2h63Tc" target="_blank" class="addon-title" data-addon-name="Blue Anime">Blue Anime</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/dbc6ba88-cab2-427d-b2e5-00c68e0dd260/BlueAnime_Thumbnail_0.jpg" alt="Blue Anime" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/PenZWgh" target="_blank" class="addon-title" data-addon-name="Blue Champions">Blue Champions</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/b7d931b3-df77-4f2b-bfae-0e81a6be930c/BlueChampions_Thumbnail_0.jpg" alt="Blue Champions" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/jK2OAQ" target="_blank" class="addon-title" data-addon-name="Cats Party">Cats Party</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/be69d07b-4322-499d-884f-9bf5a2941641/CatsParty_Thumbnails_0.jpg" alt="Cats Party" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/nRwEWr" target="_blank" class="addon-title" data-addon-name="Cottage Core Cuteness">Cottage Core Cuteness</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1f32b1aa-0ad7-4e44-9ac2-73aaf78c256f/CottageCoreCuteness_Thumbnail_0.jpg" alt="Cottage Core Cuteness" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qzry8Pmf" target="_blank" class="addon-title" data-addon-name="Cursed Masks">Cursed Masks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/7bde33f7-e843-4fd6-805c-ec84f649e5bb/cursedmasks_Thumbnail_0.jpg" alt="Cursed Masks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WgFNzmC3" target="_blank" class="addon-title" data-addon-name="Cute Onesies">Cute Onesies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ffe34695-3679-45f9-b693-24f3298dcb83/CuteOnesies_Thumbnail_0.jpg" alt="Cute Onesies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/YYPdF75" target="_blank" class="addon-title" data-addon-name="DARK MASTERS">DARK MASTERS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d3107855-a859-48a6-ab35-13e58b22dfbe/dark_masters_Thumbnail_0.jpg" alt="DARK MASTERS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/fHw9b0" target="_blank" class="addon-title" data-addon-name="Dark Purple">Dark Purple</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d9b6d4a8-19fb-489e-adf8-6af085314555/DarkPurple_Thumbnail_0.jpg" alt="Dark Purple" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/KVrRs" target="_blank" class="addon-title" data-addon-name="Dark Purple Knights">Dark Purple Knights</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/7eb147ca-00ec-48bc-b7a1-a8c96c4417e7/DarkPurpleKnights_Thumbnail_0.jpg" alt="Dark Purple Knights" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/NX4NxpE1" target="_blank" class="addon-title" data-addon-name="DARK SHADOWS">DARK SHADOWS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/661e4182-82e4-41f2-af9c-39d624131ef8/dark_shadows_Thumbnail_0.jpg" alt="DARK SHADOWS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/uTUPOnH" target="_blank" class="addon-title" data-addon-name="Dream+">Dream+</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/97cdcde3-9c66-429d-b54c-3d16b259ad0e/Dream_Thumbnail_0.jpg" alt="Dream+" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/kyPI2Yy" target="_blank" class="addon-title" data-addon-name="Ender Warriors">Ender Warriors</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/4e3f1c3b-bf50-489b-b059-ef5dbc0f99a0/EnderWarriors_Thumbnail_0.jpg" alt="Ender Warriors" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/JCrG" target="_blank" class="addon-title" data-addon-name="Entity and Null">Entity and Null</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/911aba7c-bb04-483f-bd4c-c5b827f00766/EntityandNull_Thumbnail_0.jpg" alt="Entity and Null" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/e0EGJXEP" target="_blank" class="addon-title" data-addon-name="Eye Anomaly">Eye Anomaly</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/4eba2462-a4c3-4db8-b0de-431a9774981c/EA_Thumbnail_0.jpg" alt="Eye Anomaly" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/AW9hoR" target="_blank" class="addon-title" data-addon-name="Fairy Core Cubecraft">Fairy Core Cubecraft</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/428e0715-e38f-4e13-99be-1ab401a549e3/FairyCore_Thumbnail.jpg" alt="Fairy Core Cubecraft" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/cJ3rI" target="_blank" class="addon-title" data-addon-name="Fire x Ice Shadows">Fire x Ice Shadows</a>
+            <div class="addon-image-container">
+                <img src="https://www.minecraft.net/en-us/marketplace/pdp/pixelationz-studios/fire-x-ice-shadows/def4f94d-7d28-4490-87b6-e383023341e8" alt="Fire x Ice Shadows" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/kAB4Wr6m" target="_blank" class="addon-title" data-addon-name="Golden Demons">Golden Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d1459c2e-ce24-45be-9de2-9270c88f9804/GoldenDemons_Thumbnail_0.jpg" alt="Golden Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/ab0D" target="_blank" class="addon-title" data-addon-name="Jujutsu Anime">Jujutsu Anime</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/f6216e9a-4808-4c1b-ae3d-89395502814b/JA_Thumbnail_0.jpg" alt="Jujutsu Anime" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/X3MS" target="_blank" class="addon-title" data-addon-name="Jujutsu Mages">Jujutsu Mages</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/009d0574-406f-4fa8-a3f7-294ef6e16a93/starktma.jujutsu_mages_Thumbnail_0.jpg" alt="Jujutsu Mages" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/cAf8bW" target="_blank" class="addon-title" data-addon-name="Masked Teens">Masked Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9313f752-d766-48cc-8429-f117a0675568/maskedteens_thumbnail_0.jpg" alt="Masked Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/iUGXJfO" target="_blank" class="addon-title" data-addon-name="Neon Demons">Neon Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/661fca53-5fce-4942-b74e-7009601ee38c/NeonDemons_Thumbnail_0.jpg" alt="Neon Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qd1sZAR" target="_blank" class="addon-title" data-addon-name="Neon Mobs RGB">Neon Mobs RGB</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/8f8b17b8-05ec-48f5-be95-5c325c49b815/Neon_Mobs_RGB_Thumbnail_0.jpg" alt="Neon Mobs RGB" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/tLNc" target="_blank" class="addon-title" data-addon-name="Purple Squad">Purple Squad</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cb3e8c25-71b1-408f-8984-10ad9c37fd3c/PurpleSquad_Thumbnail_0.jpg" alt="Purple Squad" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/cfAPhHnX" target="_blank" class="addon-title" data-addon-name="PVP Pros!">PVP Pros!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/04710839-a44d-4bf9-a8c2-47b5c6c07a88/PVPPros_Thumbnail_0.jpg" alt="PVP Pros!" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/HqyIOaB" target="_blank" class="addon-title" data-addon-name="Rainbow Glam">Rainbow Glam</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/9c95f9db-2aa4-4703-9779-912d0bcdeec6/RainbowGlam_Thumbnail_0.jpg" alt="Rainbow Glam" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/UsnN7KRl" target="_blank" class="addon-title" data-addon-name="Sigma Pack">Sigma Pack</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/9aa3b313-20b4-4b09-a732-64f2d2c49a15/Sigma_Pack_thumbnail_0.jpg" alt="Sigma Pack" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6LtAs6" target="_blank" class="addon-title" data-addon-name="Skaters">Skaters</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5cbce7ff-8cb7-4c51-bc58-b7c98f1efc16/Skaters_Thumbnail_0.jpg" alt="Skaters" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/CXuz" target="_blank" class="addon-title" data-addon-name="Smiley Fashion">Smiley Fashion</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1fe16c2c-3acf-49a1-bfc6-a6204d8b76d9/SmileyFashionHD_Thumbnail_0.jpg" alt="Smiley Fashion" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/t6fjf" target="_blank" class="addon-title" data-addon-name="Soft Cats">Soft Cats</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cc139ae3-615c-4f88-890b-654cfa011169/SoftCats_Thumbnail_0.jpg" alt="Soft Cats" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/B8Co93ke" target="_blank" class="addon-title" data-addon-name="Summer Party">Summer Party</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/80e00553-2846-4123-93ad-bffcd0a3e484/SummerParty_Thumbnail_0.jpg" alt="Summer Party" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/FounmJhi" target="_blank" class="addon-title" data-addon-name="Trending 2024 Megapack">Trending 2024 Megapack</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d264bb0f-b0de-459d-b65f-6ccb6d959f5b/Trending2024Megapack_Thumbnail_0.jpg" alt="Trending 2024 Megapack" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dsbn" target="_blank" class="addon-title" data-addon-name="Anime Couples">Anime Couples</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ede88148-2aed-47b5-8dfc-05016c7ebd13/MD_Thumbnail_0.jpg" alt="Anime Couples" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/MAqfnfYZ" target="_blank" class="addon-title" data-addon-name="Anime Highschool">Anime Highschool</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/27a31372-46ae-4ec0-94b7-94bb6e1d4eaa/AnimeHighschool_Thumbnail_0.jpg" alt="Anime Highschool" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/JSYL" target="_blank" class="addon-title" data-addon-name="Anime Hypebeasts">Anime Hypebeasts</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9c352f13-33ed-4b06-aa35-848f4a1279e8/AnimeHypebeasts_Thumbnail_0.jpg" alt="Anime Hypebeasts" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/uBkvO" target="_blank" class="addon-title" data-addon-name="Anime Legends">Anime Legends</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/5a87bf8c-7823-4e67-af2d-7272e8c267ab/starktma.anime_legends_Thumbnail_0.jpg" alt="Anime Legends" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zdTRwaE" target="_blank" class="addon-title" data-addon-name="Anime School">Anime School</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1f2683db-6b6e-4d70-92dc-28da56be33b5/Anime_School_Thumbnail_0.jpg" alt="Anime School" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/5aoO" target="_blank" class="addon-title" data-addon-name="Anime Students">Anime Students</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/fdd4f0a9-709f-4875-a8fb-9de3fbb6a8ed/AnimeStudents_Thumbnail_0.jpg" alt="Anime Students" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/G2KRA" target="_blank" class="addon-title" data-addon-name="Anime Teens">Anime Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/30c07a9b-5902-4c7a-80d2-40416770ef70/AnimeTeens_Thumbnail_0.jpg" alt="Anime Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6WZEdjZi" target="_blank" class="addon-title" data-addon-name="Anime Warriors">Anime Warriors</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/490ad5db-7a77-47d6-bd04-8ec83466ce97/AnimeWarriors_Thumbnails_0.jpg" alt="Anime Warriors" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/vAjSTFct" target="_blank" class="addon-title" data-addon-name="ANOMALY ENIGMA">ANOMALY ENIGMA</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e8753bf1-f28b-48e4-93d5-460a57509ee9/anomaly_enigma_Thumbnail_0.jpg" alt="ANOMALY ENIGMA" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zsKSG" target="_blank" class="addon-title" data-addon-name="Aphmau Vampires and Werewolves">Aphmau Vampires and Werewolves</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/091baf7c-3f1a-4080-817e-aebc07e345f9/Thumbnail_0.jpg" alt="Aphmau Vampires and Werewolves" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Ej6ai4J" target="_blank" class="addon-title" data-addon-name="Axolotls">Axolotls</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/ada374fe-0495-419c-ac1c-8129435d9fce/Axolotls_Thumbnail_0.jpg" alt="Axolotls" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/iYgmi" target="_blank" class="addon-title" data-addon-name="Back to School">Back to School</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/72546339-57ee-4691-b88b-a63cc98ce459/backtoschool_thumbnail_0.jpg" alt="Back to School" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WFGLrRMu" target="_blank" class="addon-title" data-addon-name="Backroom Exploration">Backroom Exploration</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d4e35404-f3f7-4643-97e5-b991c1414d74/BE_Thumbnail_0.jpg" alt="Backroom Exploration" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/pydtn" target="_blank" class="addon-title" data-addon-name="Bee Teens">Bee Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e7c3dd46-b04f-47ec-b6aa-e114dd7624e8/Bee_Teens_Thumbnail_0.jpg" alt="Bee Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zqPvJ" target="_blank" class="addon-title" data-addon-name="Bee Teens HD">Bee Teens HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/50c05680-03c6-47ef-9d46-f0e3c5946334/beeteenshd_Thumbnail_0.jpg" alt="Bee Teens HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/DQ6QUOVc" target="_blank" class="addon-title" data-addon-name="Best Friends">Best Friends</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e01a9a5f-47b6-43b9-a6d2-bde0c3b93e3c/BestFriends_Thumbnail_0.jpg" alt="Best Friends" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/sKSYme1" target="_blank" class="addon-title" data-addon-name="Birdie Wings">Birdie Wings</a>
+            <div class="addon-image-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu0BubZyTwwSMndOCF_8yGhzk1KLo90P-aPV3FBPvKZhLtqAEksdOwBtBL&s=10" alt="Birdie Wings" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/sKGlSu" target="_blank" class="addon-title" data-addon-name="Black">Black</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e8c29af4-54df-4f98-95c9-27c05afc6eae/black_Thumbnail_0.jpg" alt="Black" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/5tJnPe6" target="_blank" class="addon-title" data-addon-name="Black and Gold">Black and Gold</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/40470421-f60a-4575-bdb7-dd195517af2d/BLACK_And_GOLD_Thumbnail_0.jpg" alt="Black and Gold" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/wAGjzdQ3" target="_blank" class="addon-title" data-addon-name="Black and Gold">Black and Gold</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/75ec31b1-a577-405e-8cf9-c3c120067c45/BlackAndGold_Thumbnail_0.jpg" alt="Black and Gold" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/hURIJ" target="_blank" class="addon-title" data-addon-name="Black and Orange">Black and Orange</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/3046797a-4478-45be-a247-939c3802fa24/BlackandOrange_Thumbnail_0.jpg" alt="Black and Orange" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/0AjUSNhs" target="_blank" class="addon-title" data-addon-name="Black & White">Black & White</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/59a1c7e6-97b0-49a3-b3fb-f453d46900c5/BlackWhite_Thumbnail_0.jpg" alt="Black & White" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/x7DjXgC" target="_blank" class="addon-title" data-addon-name="Black Elegance">Black Elegance</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/c54f353f-0dc9-4e11-8878-c026498be9d5/starktma.black_elegance_Thumbnail_0.jpg" alt="Black Elegance" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/gg6O2wx" target="_blank" class="addon-title" data-addon-name="Black & White">Black & White</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/0e84d7f8-24f4-4135-a39e-37ef71dc9683/BlackWhite_Thumbnail_0.jpg" alt="Black & White" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/MZFjgs2" target="_blank" class="addon-title" data-addon-name="Black X Gold">Black X Gold</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/fc533323-d666-4dc0-830c-d22d20a60341/ContentName_Thumbnail_0.jpg" alt="Black X Gold" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qN09q" target="_blank" class="addon-title" data-addon-name="Black x Gold">Black x Gold</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2f712caa-95ab-4133-a230-a2710407458f/BlackxGold_Thumbnail_0.jpg" alt="Black x Gold" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6vdh1hG" target="_blank" class="addon-title" data-addon-name="Black x Pink Overload">Black x Pink Overload</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/5f04706d-337f-4689-bdf4-fe2dc85b35fe/Black_x_Pink_Overload_Thumbnail.jpg" alt="Black x Pink Overload" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/OChnkmx" target="_blank" class="addon-title" data-addon-name="CASTLE">CASTLE</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/8e972692-8f9b-4213-ad21-197cf46a9d13/C_Thumbnail_0.jpg" alt="CASTLE" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Au0K" target="_blank" class="addon-title" data-addon-name="Cat Maids">Cat Maids</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ff74bbdc-042d-47cb-a99a-23e49eceed92/CatMaids_Thumbnail_0.jpg.jpg" alt="Cat Maids" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/NBShH1j" target="_blank" class="addon-title" data-addon-name="Cherry Blossom">Cherry Blossom</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d10615a6-6dcf-47e8-9a2d-2500d8f5de71/Cherry_Blossom_Thumbnail_0.jpg" alt="Cherry Blossom" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/mMXsGE3c" target="_blank" class="addon-title" data-addon-name="Chibi">Chibi</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/262556ac-c570-40ba-81e0-39bcecd6d849/Chibi_Thumbnail_0.jpg" alt="Chibi" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/NTwrm8" target="_blank" class="addon-title" data-addon-name="Chibi Teens">Chibi Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/c7862804-28db-4a26-8d39-9b6ec1a5cddd/ContentName_Thumbnail_0.jpg" alt="Chibi Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Ik1pkFMx" target="_blank" class="addon-title" data-addon-name="Chill Guy">Chill Guy</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2e0f9726-4c3d-44c7-86ab-c334733e1021/ChillGuy_Thumbnail_0.jpg" alt="Chill Guy" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Tfrcy" target="_blank" class="addon-title" data-addon-name="Chroma Knights">Chroma Knights</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/07b641ae-74c3-47cf-8ede-17f0d74ec541/ChromaKnights_Thumbnail_0.jpg" alt="Chroma Knights" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/0VqQ6S" target="_blank" class="addon-title" data-addon-name="Corrupt Shadows">Corrupt Shadows</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d033f0ad-c6a8-4e31-8fdf-0268a4008a88/corruptshadows_Thumbnail_0.jpg" alt="Corrupt Shadows" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zU3jB2H" target="_blank" class="addon-title" data-addon-name="Cottage Core Bakery">Cottage Core Bakery</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1307302b-4e59-4e80-85e7-9b30c7d635de/CottageCoreBakery_Thumbnail.jpg" alt="Cottage Core Bakery" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/R3jJIo3" target="_blank" class="addon-title" data-addon-name="Cozy Cats">Cozy Cats</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9b64d969-d286-446d-835d-cfe36d20fae1/Cozy_Cats_Thumbnail_0.jpg" alt="Cozy Cats" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qHReC9" target="_blank" class="addon-title" data-addon-name="Creeper Core">Creeper Core</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/57f82b9f-be54-4ad3-ac53-ac5b3e352382/CreeperCore_Thumbnail_0.jpg" alt="Creeper Core" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Koq7YP" target="_blank" class="addon-title" data-addon-name="Creeper Merch">Creeper Merch</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/667dbefe-ac42-4b1a-8688-c99f8995844f/Creeper_Merch_Thumbnail_0.jpg" alt="Creeper Merch" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dle6YHbE" target="_blank" class="addon-title" data-addon-name="CREEPER!">CREEPER!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/eaf5bf76-216c-4365-9bb2-3d00237a96c2/CREEPER_Thumbnail_0.jpg" alt="CREEPER!" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/MbS5UI5g" target="_blank" class="addon-title" data-addon-name="Creepy Pasta">Creepy Pasta</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/2b53f096-afd2-4e4f-bccb-d51cc4269fa1/CreepyPasta_Thumbnail_0.jpg" alt="Creepy Pasta" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/UCTQWoaM" target="_blank" class="addon-title" data-addon-name="Cute Cats HD">Cute Cats HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/f05ab01f-4d3f-4bf6-a597-683685a57776/CuteCatsHD_Thumbnail_0.jpg" alt="Cute Cats HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/7OYr" target="_blank" class="addon-title" data-addon-name="Cute in Pink!">Cute in Pink!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/93067a39-c717-4132-b611-73ad8640a963/CuteInPink_Thumbnail_0.jpg" alt="Cute in Pink!" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Xq6MRt" target="_blank" class="addon-title" data-addon-name="Cute Mobs">Cute Mobs</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/0268e787-a8f0-4a0a-b8d0-88b7dbe450cc/Cute_Mobs_thumbnail_0.jpg" alt="Cute Mobs" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/daXCs" target="_blank" class="addon-title" data-addon-name="Cutie Bunnies">Cutie Bunnies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e6e576bb-8542-4150-91f3-04b756dbcca7/CutieBunnies_Thumbnail_0.jpg" alt="Cutie Bunnies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/oP9Du" target="_blank" class="addon-title" data-addon-name="Cyber RGB">Cyber RGB</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/2848e527-f276-4097-b813-e6a494df3f8c/cyberrgb_Thumbnail_0.jpg" alt="Cyber RGB" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Eei5zeW" target="_blank" class="addon-title" data-addon-name="Dark Ducks">Dark Ducks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/62b2726c-62c5-4ef5-90dd-8034f7e64864/DarkDucks_Thumbnail_0.jpg" alt="Dark Ducks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6wP6k" target="_blank" class="addon-title" data-addon-name="Dark Ender Demons">Dark Ender Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/7d612e21-2a49-4b02-993d-82f52a0225ae/ContentName_Thumbnail_0.jpg" alt="Dark Ender Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/VWxE7" target="_blank" class="addon-title" data-addon-name="Dark Entities">Dark Entities</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/bf4e9ef1-154c-4af9-aa19-46563d2dfab0/DarkEntities_Thumbnail_0.jpg" alt="Dark Entities" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/8wyz9NV" target="_blank" class="addon-title" data-addon-name="Dark Fire">Dark Fire</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/28369a80-5659-4af9-ab7d-807203c453d9/DarkFireSkins_Thumbnail_0.jpg" alt="Dark Fire" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/3JirSbXp" target="_blank" class="addon-title" data-addon-name="DARK KEEPERS">DARK KEEPERS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/89b3d154-eea6-4511-b5cf-c896066d4e42/dark_keepers_Thumbnail_0.jpg" alt="DARK KEEPERS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LxeFPXh" target="_blank" class="addon-title" data-addon-name="Dark Knight">Dark Knight</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/84698a1c-a220-4a3d-93bb-48f78658a685/DarkKnight_Thumbnail_0.jpg" alt="Dark Knight" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/NkKYdQm" target="_blank" class="addon-title" data-addon-name="Dark Love">Dark Love</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/60f31455-7450-4c6d-a01c-902e49e8f97e/DarkLove_Thumbnail_0.jpg" alt="Dark Love" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/JkHsR" target="_blank" class="addon-title" data-addon-name="Dark Megapack">Dark Megapack</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/35ea370e-579b-4e4c-974a-9370b537c7d1/Dark_Megapack_Thumbnail_0.jpg" alt="Dark Megapack" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/QfrLKpUM" target="_blank" class="addon-title" data-addon-name="Dark Purple Souls">Dark Purple Souls</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/25838f24-8686-41d1-85d7-86686bc8d578/DarkPurpleSouls_Thumbnail_0.jpg" alt="Dark Purple Souls" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/188celEB" target="_blank" class="addon-title" data-addon-name="Dark Red Fashion">Dark Red Fashion</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/17ed9ea4-8dad-4b63-a8b8-64e6d572c27a/DarkRedFashion_Thumbnail.jpg" alt="Dark Red Fashion" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/IQObufH9" target="_blank" class="addon-title" data-addon-name="DARK SPECTERS">DARK SPECTERS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/8e635f62-2983-469e-a438-37f318eaceae/dark_specters_Thumbnail_0.jpg" alt="DARK SPECTERS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6rJg9pwp" target="_blank" class="addon-title" data-addon-name="Dark Skins">Dark Skins</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/43cdb510-de3f-495b-b8a5-79e7bc925db0/dark_skins_thumbnail_0.jpg" alt="Dark Skins" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/7Q2gCUE" target="_blank" class="addon-title" data-addon-name="Dark Soul Spirits">Dark Soul Spirits</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/0b5a9e17-c3cb-446a-919c-fb2cbefc43e7/DarkSoulSpirits_Thumbnail_0.jpg" alt="Dark Soul Spirits" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/5xpmfyCe" target="_blank" class="addon-title" data-addon-name="Dark Tempest">Dark Tempest</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d903f13e-eef9-4653-92a6-eb669461e4ec/DarkTempest_Thumbnail_0.jpg" alt="Dark Tempest" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zvwZ" target="_blank" class="addon-title" data-addon-name="Dark X Light">Dark X Light</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/fb110f5c-9b21-4b17-be37-1f52a0a2d5bd/ContentName_Thumbnail_0.jpg" alt="Dark X Light" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/v2U9iL" target="_blank" class="addon-title" data-addon-name="Dark Blue Aether">Dark Blue Aether</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/0d746125-a036-49ee-a9f8-f79ab8c190ea/DarkBlueAether_Thumbnail_0.jpg" alt="Dark Blue Aether" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/BFKm" target="_blank" class="addon-title" data-addon-name="Demon Slayer HD">Demon Slayer HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/8a44bfe8-b97f-425a-ada2-e019018ac512/DemonSlayerHD_Thumbnail_0.jpg" alt="Demon Slayer HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Zjn0n" target="_blank" class="addon-title" data-addon-name="Demon Teens HD">Demon Teens HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/8d080ae4-719a-4d7a-9005-f5afb1299fd0/Thumbnail_0.jpg" alt="Demon Teens HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/kvyP" target="_blank" class="addon-title" data-addon-name="Demonic Style">Demonic Style</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/5bace28b-8d86-4fb7-9baf-11a349cdbf54/DemonicStyle_Thumbnail_0.jpg" alt="Demonic Style" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/jlKWs1H" target="_blank" class="addon-title" data-addon-name="Devilish Shadows">Devilish Shadows</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/460ad339-8040-4c07-9f54-56729f92a234/DevilishShadows_Thumbnail_0.jpg" alt="Devilish Shadows" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WOrx4KW" target="_blank" class="addon-title" data-addon-name="Dragons Teens">Dragons Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/4e64fcb2-a9ee-48c2-8047-a495f9facbf2/DragonsTeens_Thumbnail_0.jpg" alt="Dragons Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/xlh3qFb" target="_blank" class="addon-title" data-addon-name="DREAM MONSTERS">DREAM MONSTERS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/f3251f01-96b1-4aaf-9d54-36c89f730fc4/DREAMMONSTERS_Thumbnail_0.jpg" alt="DREAM MONSTERS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/i6SlCH" target="_blank" class="addon-title" data-addon-name="Dream++">Dream++</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/22a086ec-0ada-414b-a037-86dd30ed30f5/Dream_Thumbnail_0.jpg" alt="Dream++" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qmgX" target="_blank" class="addon-title" data-addon-name="Dressed Demons">Dressed Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/de9665f0-4915-4231-8adc-1ba579b1a3d3/dressed_demons_thumbnail_0.jpg" alt="Dressed Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/rKw7o" target="_blank" class="addon-title" data-addon-name="Duck Teens">Duck Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d7b4f26c-afed-4388-bff6-eec121e53ca4/ContentName_Thumbnail_0.jpg" alt="Duck Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/U2yZdyOo" target="_blank" class="addon-title" data-addon-name="Ducks">Ducks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/abe62c7c-20a4-4d2e-9b3c-390c0e04725b/ducks_Thumbnail_0.jpg" alt="Ducks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/JN5j" target="_blank" class="addon-title" data-addon-name="Ducks">Ducks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/10dcc61b-9740-4a3b-b361-564040f49c20/O_Thumbnail_0.jpg" alt="Ducks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/fjRS" target="_blank" class="addon-title" data-addon-name="Ducks">Ducks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2c757bb7-736e-4efc-9c50-39b54d8eae12/Ducks_Thumbnail_0.jpg" alt="Ducks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GPQSW" target="_blank" class="addon-title" data-addon-name="Ducks">Ducks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/be2745d8-512f-462a-bac2-a33ca85898d0/Ducks_Thumbnail_0.jpg" alt="Ducks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/rAsC" target="_blank" class="addon-title" data-addon-name="Elemental Creepers">Elemental Creepers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/ef275ca4-f045-4aee-98c9-36fbd8688488/ElementalCreepers_Thumbnail_0.jpg" alt="Elemental Creepers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/HmAbT" target="_blank" class="addon-title" data-addon-name="Elemental Gamers">Elemental Gamers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/30aecbc3-bead-497d-938f-044e5c089e11/ElementalGamers_Thumbnail_0.jpg" alt="Elemental Gamers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/pxNK" target="_blank" class="addon-title" data-addon-name="Emoji Faces">Emoji Faces</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/f1ed0190-d17e-428b-ad75-c7438ba2dc70/emojifaces_Thumbnail_0.jpg" alt="Emoji Faces" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/DRWUduB" target="_blank" class="addon-title" data-addon-name="Ender">Ender</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0924ba31-b144-452a-84fa-12ba60995c4c/Ender_Thumbnail_0.jpg" alt="Ender" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/3DRI" target="_blank" class="addon-title" data-addon-name="Ender Legion HD">Ender Legion HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/75e8867a-cc64-4a37-980d-44dd429a03ec/EnderLegionHD_Thumbnails_0.jpg" alt="Ender Legion HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/b1MQvd6d" target="_blank" class="addon-title" data-addon-name="Ender Megapack">Ender Megapack</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e7ec01ea-0805-42f0-a021-32c76260da86/Ender_Megapack_Thumbnail.jpg" alt="Ender Megapack" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/nOsRVSlr" target="_blank" class="addon-title" data-addon-name="Entity 303 HD">Entity 303 HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/43d40d80-cc0c-480f-848b-fb01107a12f4/Entity_303_HD_thumbnail_0.jpg" alt="Entity 303 HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Xc0lbYv" target="_blank" class="addon-title" data-addon-name="FEARLESS">FEARLESS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a05b482f-dd1d-438e-94fa-9580ef69ed39/fearless_Thumbnail_0.jpg" alt="FEARLESS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/9m3hAj" target="_blank" class="addon-title" data-addon-name="Flower Bunny">Flower Bunny</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/22047e1d-c8f2-4693-902f-273e1c3a55cd/FlowerBunny_Thumbnail_0.jpg" alt="Flower Bunny" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/DHbhzL" target="_blank" class="addon-title" data-addon-name="FOOTBALL">FOOTBALL</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/71082082-98d8-4afe-9f7b-569d1336d8e1/football_Thumbnail_0.jpg" alt="FOOTBALL" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/R7DnCg" target="_blank" class="addon-title" data-addon-name="Football 2">Football 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/bc4ae5aa-aef4-4c8f-b03c-f68c004624b5/football_2_Thumbnail_0.jpg" alt="Football 2" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/3Wba6OW" target="_blank" class="addon-title" data-addon-name="Funny Villagers">Funny Villagers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/49d076e6-ca83-4c5f-afbb-f97540408bb9/FunnyVillagers_Thumbnail_0.jpg" alt="Funny Villagers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Lmy1a0" target="_blank" class="addon-title" data-addon-name="Furry Maids">Furry Maids</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/8ce1b2d2-2f7f-459c-b317-2e8471153b89/FurryMaids_Thumbnail_0.jpg" alt="Furry Maids" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/QBYoY5" target="_blank" class="addon-title" data-addon-name="Gamer Crew">Gamer Crew</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/280fe403-bdb2-4e9d-aefe-1d30e447106f/GC_Thumbnail_0.jpg" alt="Gamer Crew" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/8KKaBg8w" target="_blank" class="addon-title" data-addon-name="Gamer Mobs 2">Gamer Mobs 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/2a887bf8-925e-409e-b700-f85a3bdbb551/GamerMobs2_Thumbnail_0.jpg" alt="Gamer Mobs 2" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/yvGxah" target="_blank" class="addon-title" data-addon-name="Gamers">Gamers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cadb30f3-d387-4b9e-9654-84ec2aea0ad4/G_Thumbnail_0.jpg" alt="Gamers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GIsR" target="_blank" class="addon-title" data-addon-name="Golden Gamers">Golden Gamers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/10c838c7-7c52-43fb-a64d-086c8fcefe91/Thumbnail_0.jpg" alt="Golden Gamers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/N4dq" target="_blank" class="addon-title" data-addon-name="Goth Ender Demons">Goth Ender Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/30294056-3f40-4879-a3eb-13199e68f681/GothEnderDemons_Thumbnail_0.jpg" alt="Goth Ender Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Ggcu42" target="_blank" class="addon-title" data-addon-name="Goth Star Fashion">Goth Star Fashion</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cb3ef91d-a2a6-46f6-8cdd-413df2667369/Goth_Star_Fashion_Thumbnail.jpg" alt="Goth Star Fashion" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/ozhCbVn9" target="_blank" class="addon-title" data-addon-name="Grimace Egg">Grimace Egg</a>
+            <div class="addon-image-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVerLmvYfMw27vZ08z1iVtwzb6S02goda1-8iVUeeQXkY-mFKz5BOxZGc&s=10" alt="Grimace Egg" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LfGMVE" target="_blank" class="addon-title" data-addon-name="HD+ Mob Teens">HD+ Mob Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/56002277-a36a-4771-bff4-69112465950c/Thumbnail_0.jpg" alt="HD+ Mob Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/fdSvrK" target="_blank" class="addon-title" data-addon-name="HD+ Sweater Teens">HD+ Sweater Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9d005a5a-463e-4092-90c0-031f6ea4c6d4/Thumbnail_0.jpg" alt="HD+ Sweater Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/R4uE8" target="_blank" class="addon-title" data-addon-name="Horror Legends">Horror Legends</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/206bffbb-acd5-4713-8241-ec492909257a/starktma.horror_legends_Thumbnail_0.jpg" alt="Horror Legends" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/31IZF7c" target="_blank" class="addon-title" data-addon-name="I LOVE DINOS">I LOVE DINOS</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e57ab71b-dc6f-4ae7-af4f-62e6e99dc2c0/ILOVEDINOS_Thumbnail_0.jpg" alt="I LOVE DINOS" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/q3bEOLF" target="_blank" class="addon-title" data-addon-name="Jeff Nightmare">Jeff Nightmare</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6d3a2dd8-b7c3-45c0-a2bb-d5b775550d36/Jeff_The_Slasher_thumbnail_0.jpg" alt="Jeff Nightmare" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/sIQWB3Z" target="_blank" class="addon-title" data-addon-name="Kawaii Animal Onisies">Kawaii Animal Onisies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/3c0a3da9-f28b-4f44-8b69-90c157ce8500/KawaiAnimalOnisies_Thumbnail_0.jpg" alt="Kawaii Animal Onisies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/AANN" target="_blank" class="addon-title" data-addon-name="Kawaii Frogs">Kawaii Frogs</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/4b62b1cd-b6a1-4846-b9d1-3c9240b02618/KawaiiFrogs_Thumbnail_0.jpg" alt="Kawaii Frogs" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/26muxM" target="_blank" class="addon-title" data-addon-name="Kitty">Kitty</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/8feaf1c4-01c2-45d3-b48f-f1a0b8fa1546/O_Thumbnail_0.jpg" alt="Kitty" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dXjhwS5" target="_blank" class="addon-title" data-addon-name="Kitty Cats">Kitty Cats</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e86ec81e-c4ff-46d5-bd2a-585d56aad6d2/KittyCats_Thumbnail_0.jpg" alt="Kitty Cats" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Vm0yYY" target="_blank" class="addon-title" data-addon-name="Knightmare Knights">Knightmare Knights</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d50a30af-6789-414c-a506-f72ad585c583/KK_Thumbnail_0.jpg" alt="Knightmare Knights" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/ynPKYTq1" target="_blank" class="addon-title" data-addon-name="Knights HD">Knights HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/5ab54c2d-b804-47d2-a502-22d07bc2a20e/KnightsHD_Thumbnail_0.jpg" alt="Knights HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/hNGRO" target="_blank" class="addon-title" data-addon-name="Lava Creepers">Lava Creepers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cd4e6539-9b1f-4bbb-8a42-f745c7eac0b5/lavacreepers_Thumbnail_0.jpg" alt="Lava Creepers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/wc5RJu" target="_blank" class="addon-title" data-addon-name="Lava VS Soulfire Crowns">Lava VS Soulfire Crowns</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/af300471-8ea3-4a30-aa00-fc36eb72dbc2/lavavssoulfirecrowns_Thumbnail_0.jpg" alt="Lava VS Soulfire Crowns" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/mp1G" target="_blank" class="addon-title" data-addon-name="Legendary Gamers">Legendary Gamers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/322d318e-1196-435f-bcb7-8e6b1819dbe3/LegendaryGamers_Thumbnail_0.jpg" alt="Legendary Gamers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Kgrql" target="_blank" class="addon-title" data-addon-name="Love Demons">Love Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9edb35e8-0aa3-4b21-b082-11b38cc67f94/LoveDemons_Thumbnail_0.jpg" alt="Love Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/QjcQZYCf" target="_blank" class="addon-title" data-addon-name="Magic">Magic</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e72dfc34-4749-464f-8312-9152c7ce2410/magic_Thumbnail_0.jpg" alt="Magic" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/eZZKQ7" target="_blank" class="addon-title" data-addon-name="Master Cloaks">Master Cloaks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ecdf23f5-69dc-4068-8153-1158159f8585/MasterCloaks_Thumbnail_0.jpg" alt="Master Cloaks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/d9eqrY" target="_blank" class="addon-title" data-addon-name="Matching Fits">Matching Fits</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d0cae0c1-0163-4aba-8489-a5abc6754063/MatchingFits_Thumbnail_0.jpg" alt="Matching Fits" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/7cbC" target="_blank" class="addon-title" data-addon-name="Mega Anime Idols">Mega Anime Idols</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/cb6fbe14-7a1d-42d6-ad69-af158ee76a32/MegaAnimeIdols_Thumbnail_0.jpg" alt="Mega Anime Idols" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qb1J3T" target="_blank" class="addon-title" data-addon-name="Meme Emoji">Meme Emoji</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/4969161e-976d-480e-9133-dea9e67cb81b/memeemoji_thumbnail_0.jpg" alt="Meme Emoji" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/aQB4vW" target="_blank" class="addon-title" data-addon-name="Meme Food HD">Meme Food HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/5a6d69b4-1159-4031-9fde-85b3ca1b1df9/Meme_Food_HD_thumbnail_0.jpg" alt="Meme Food HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/pKydP3" target="_blank" class="addon-title" data-addon-name="Memes">Memes</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1e458208-ca70-4b95-aa01-6e8e896a1345/memes_thumbnail_0.jpg" alt="Memes" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/UvE9" target="_blank" class="addon-title" data-addon-name="Midnight">Midnight</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e4ac397f-651a-4101-96fb-bfbf0c5f05f0/Thumbnail_0.jpg" alt="Midnight" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/o9YJkoK" target="_blank" class="addon-title" data-addon-name="Mob Hoodies">Mob Hoodies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/db8ba134-5bd0-49cc-9b0f-5a0f9548bbae/Mob_Hoodies_Thumbnail_0.jpg" alt="Mob Hoodies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/iNRF" target="_blank" class="addon-title" data-addon-name="Mob Maids">Mob Maids</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/72d1f3a8-4974-41ed-bd03-0f9060b7f570/MobMaidsSkinPack_Thumbnail_0.jpg" alt="Mob Maids" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/0Gyt8twf" target="_blank" class="addon-title" data-addon-name="Mushroom Teens">Mushroom Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/256ab445-ae9c-4fe5-982a-469a143ac68b/Mushroom_Teens_Thumbnail_0.jpg" alt="Mushroom Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/CqiQT" target="_blank" class="addon-title" data-addon-name="My Friends HD">My Friends HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/19654ba0-1b46-413a-ba84-8faf2f18683b/MyFriendsHD_Thumbnail_0.jpg" alt="My Friends HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/YOGoo" target="_blank" class="addon-title" data-addon-name="Neko Cats">Neko Cats</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/aff774af-a6a3-4b79-b613-be82d1c32519/Thumbnail_0.jpg" alt="Neko Cats" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/U79aBj" target="_blank" class="addon-title" data-addon-name="Neko Couples">Neko Couples</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/77606546-43df-4d0e-a65a-bc04e227f43f/NekoCouples_Thumbnail_0.jpg" alt="Neko Couples" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/g6TO" target="_blank" class="addon-title" data-addon-name="Neko Love">Neko Love</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5d421e53-ca86-4b8f-bc26-88605de60eb4/NekoLove_Thumbnail_0.jpg" alt="Neko Love" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/ves2Bhb" target="_blank" class="addon-title" data-addon-name="Neko Mobs">Neko Mobs</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d8c32f92-675e-4a52-8a40-68fd30584839/NekoMobs_Thumbnail_0.jpg" alt="Neko Mobs" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/hzPr" target="_blank" class="addon-title" data-addon-name="Neon Gamers HD">Neon Gamers HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/c33b5951-779c-48b9-9e7b-2442e266ccd1/NeonGamersHD_Thumbnail_0.jpg" alt="Neon Gamers HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/k2BMN" target="_blank" class="addon-title" data-addon-name="Netherite Dragon Warriors">Netherite Dragon Warriors</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a4605653-7850-4da6-b738-f9447d3ab29e/NetheriteDragonWarriors_Thumbnail_0.jpg" alt="Netherite Dragon Warriors" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WejjO" target="_blank" class="addon-title" data-addon-name="NIGHTMARE">NIGHTMARE</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/811bcba4-d9ce-4d27-b17b-3a8940d6eca3/ContentName_Thumbnail_0.jpg" alt="NIGHTMARE" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/aySlQx" target="_blank" class="addon-title" data-addon-name="Nightmares HD">Nightmares HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/f92b7947-d16c-4f6d-b39e-37bd655c3bd2/NM_Thumbnail_0.jpg" alt="Nightmares HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/9k6QK5Iu" target="_blank" class="addon-title" data-addon-name="ONESIES">ONESIES</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/810377cf-0910-4911-b427-689d4cdee29c/ONESIES_Thumbnail_0.jpg" alt="ONESIES" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/HZkVOcce" target="_blank" class="addon-title" data-addon-name="Pink Demons">Pink Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/088a2fec-f127-4bf3-80fe-7c7b7d144f77/pinkdemons_thumbnail_0.jpg" alt="Pink Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/cjuiRH" target="_blank" class="addon-title" data-addon-name="Plasma Wireframes">Plasma Wireframes</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a6b62577-6e94-414f-b496-8801d7639b5b/plasmawireframe_Thumbnail_0.jpg" alt="Plasma Wireframes" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/QBty" target="_blank" class="addon-title" data-addon-name="Pretty Neko">Pretty Neko</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/bb6f0832-1a10-4189-bc7e-375a8c2accd7/PrettyNeko_Thumbnail_0.jpg" alt="Pretty Neko" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/YUOaSaLc" target="_blank" class="addon-title" data-addon-name="Purple Flames">Purple Flames</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d7756ad5-22c8-4ee2-ab6f-5abdb1d081c2/Purple_Flames_thumbnail_0.jpg" alt="Purple Flames" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/rICiD" target="_blank" class="addon-title" data-addon-name="Rainbow Trends">Rainbow Trends</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/74d85bae-6577-471f-a942-969bc4d77d01/RainbowTrends_Thumbnail_0.jpg" alt="Rainbow Trends" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/OwCau27g" target="_blank" class="addon-title" data-addon-name="Red Entities">Red Entities</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5cc17039-6a09-4d2c-adf5-2e26283b2a0a/RedEntities_Thumbnail_0.jpg" alt="Red Entities" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/HtsPo" target="_blank" class="addon-title" data-addon-name="Red Moon Teens">Red Moon Teens</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/bc9e0e5b-cb4f-4815-b96d-385e5e239846/RedMoonTeens_Thumbnail_0.jpg" alt="Red Moon Teens" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/KmCEFs5" target="_blank" class="addon-title" data-addon-name="RGB">RGB</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0bb80b1a-fce7-4a4e-89b8-a56fdf9d2e53/rgb_thumbnail_0.jpg" alt="RGB" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Q8yr1J" target="_blank" class="addon-title" data-addon-name="Rogue Shadows">Rogue Shadows</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/c297a2a2-ebed-471c-b45e-ccfa157fb896/RogueShadows_Thumbnail_0.jpg" alt="Rogue Shadows" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/A2dlHyS" target="_blank" class="addon-title" data-addon-name="Royal Creepers">Royal Creepers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/518d8f7f-89cd-4a42-a397-1eb837b44cee/RoyalCreepers_Thumbnail_0.jpg" alt="Royal Creepers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/oXlUw" target="_blank" class="addon-title" data-addon-name="Royal Endermans">Royal Endermans</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9b31edcb-8ba3-49e9-a227-6e23bf5adff8/RoyalEndermans_Thumbnail_0.jpg" alt="Royal Endermans" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/WeLg0VUu" target="_blank" class="addon-title" data-addon-name="Sakura">Sakura</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/02c411c3-7495-422f-bdf7-9aa42db3f0a3/SK_Thumbnail_0.jpg" alt="Sakura" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/wf8BjRI" target="_blank" class="addon-title" data-addon-name="Shadow Bunnies">Shadow Bunnies</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/237d1124-6066-43fa-861d-ddb3739f17b8/ShadowBunnies_Thumbnail_0.jpg" alt="Shadow Bunnies" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/uZaoHpJ" target="_blank" class="addon-title" data-addon-name="Shadow Dragon Warriors">Shadow Dragon Warriors</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/88ce39aa-7804-4d6c-8986-73c7717678ac/ShadowDragonWarriors_Thumbnail_0.jpg" alt="Shadow Dragon Warriors" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/NPQedQkh" target="_blank" class="addon-title" data-addon-name="Shadow Entities">Shadow Entities</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/bb5886cb-343e-441b-922c-62d8872fe560/ShadowEntities_Thumbnail_0.jpg" alt="Shadow Entities" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/gSnDO1Ya" target="_blank" class="addon-title" data-addon-name="Shadow x Void">Shadow x Void</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/f4450934-d6d2-41d2-81c2-c604bd58a2b5/ShadowXVoid_Thumbnail_0.jpg" alt="Shadow x Void" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/v6ddmvZ" target="_blank" class="addon-title" data-addon-name="Shadows">Shadows</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/dcda41d1-0ee3-4ece-8ac1-e4b80c03ff90/SHADOWS_Thumbnail_0.jpg" alt="Shadows" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/teNckZ" target="_blank" class="addon-title" data-addon-name="SHINOBI Pack">SHINOBI Pack</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d531a5c2-3995-4940-9be8-7c4b31ce79a9/SHINOBIPACK_Thumbnail_0.jpg" alt="SHINOBI Pack" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qAGLffOD" target="_blank" class="addon-title" data-addon-name="Soft Pink">Soft Pink</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6ed0f548-aa7d-46f2-9486-3a1d4ee9ebb5/SoftPink_Thumbnail_0.jpg" alt="Soft Pink" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/l7aTUm" target="_blank" class="addon-title" data-addon-name="Soul Fire Creatures">Soul Fire Creatures</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9b1d707d-03f4-4265-9372-0ef3322ce43c/SFC_Thumbnail_0.jpg" alt="Soul Fire Creatures" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/TF82c" target="_blank" class="addon-title" data-addon-name="Space Explorers">Space Explorers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/1bd48ea7-e4e1-42d3-94b3-336f89b2c0b7/SpaceExplorers_Thumbnail_0.jpg" alt="Space Explorers" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/K5Fj7Te" target="_blank" class="addon-title" data-addon-name="Spider Friends">Spider Friends</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/66320c86-c244-4640-951b-991f6922670d/SF_Thumbnail_0.jpg" alt="Spider Friends" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/k9aG2m" target="_blank" class="addon-title" data-addon-name="Streamer Boys">Streamer Boys</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/ee104ac3-814e-40b3-b4d0-55d799a48780/StreamerBoys_Thumbnail_0.jpg" alt="Streamer Boys" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/m6Ki" target="_blank" class="addon-title" data-addon-name="Street Stylized">Street Stylized</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d06616cd-806c-42a8-ac0c-7d075deb7aff/StreetStylized_Thumbnail_0.jpg" alt="Street Stylized" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zbpntO" target="_blank" class="addon-title" data-addon-name="Style Stars">Style Stars</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e2c87ac2-d309-4122-98bd-52b07b5259b9/StyleStars_Thumbnail_0.jpg" alt="Style Stars" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/6TxyLt" target="_blank" class="addon-title" data-addon-name="Suit Frenzy">Suit Frenzy</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0c5179ac-1aaa-4666-a6b6-4b8f816fa3d5/Suit_Frenzy_Thumbnail_0.jpg" alt="Suit Frenzy" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/zUBI" target="_blank" class="addon-title" data-addon-name="Teen Couples">Teen Couples</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/25f9a037-2c60-4ae8-929b-eb48d23e3bd7/thumbnails.jpg" alt="Teen Couples" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dXODJ" target="_blank" class="addon-title" data-addon-name="Toxic Demons">Toxic Demons</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/b674cad7-7950-4d1d-832c-6a9fb899b127/ToxicDemons_Thumbnail_0.jpg" alt="Toxic Demons" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/rrJTIW" target="_blank" class="addon-title" data-addon-name="Trendy Couples">Trendy Couples</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/8ca9ce66-ce62-4cf8-9133-f2906fda0b89/Trendy_Couples_Thumbnail_0.jpg" alt="Trendy Couples" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Ge9H" target="_blank" class="addon-title" data-addon-name="Trendy Teens Collection">Trendy Teens Collection</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1031dca8-1fc2-4958-a2c9-2387dd6f5f3d/TrendyTeensCollection_Thumbnail_0.jpg" alt="Trendy Teens Collection" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/YC0nAT" target="_blank" class="addon-title" data-addon-name="Valentine Couple">Valentine Couple</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/f24e8895-4752-4cce-8752-055c84fe0f57/valentine_thumbnail_0.jpg" alt="Valentine Couple" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/vya29sn2" target="_blank" class="addon-title" data-addon-name="Void Knights">Void Knights</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0a6a203f-4d61-4d0d-8952-fe9954849477/starktma.void_knights_Thumbnail_0.jpg" alt="Void Knights" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/KK6WFFh6" target="_blank" class="addon-title" data-addon-name="Void Skins">Void Skins</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/6389da61-0b13-48a9-b617-649cd93c700a/VoidSkins_thumbnail_0.jpg" alt="Void Skins" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GefGThk" target="_blank" class="addon-title" data-addon-name="Void Warriors HD">Void Warriors HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/146287b3-4095-497e-ba27-34103b54be53/VoidWarriorsHD_Thumbnail_0.jpg" alt="Void Warriors HD" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/3Vxy" target="_blank" class="addon-title" data-addon-name="Weathers">Weathers</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e5bb7da0-a48c-4aea-882a-2c6d50b5c949/Weathers_Thumbnail_0.jpg" alt="Weathers" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/dks8DD" target="_blank" class="addon-title" data-addon-name="All Black Megapack">All Black Megapack</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/68af24f7-51f2-4059-8a6a-cd0b403547c4/AllBlackMegapack_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/CCx9" target="_blank" class="addon-title" data-addon-name="Allay!">Allay!</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/d768708b-68b9-45a5-b633-5dd23be0bd2f/contentname_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/JmFlqvmR" target="_blank" class="addon-title" data-addon-name="Amethyst Vogue">Amethyst Vogue</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/cdaa0705-2b46-4892-9c50-667cd233b642/Amethyst_Vogue_thumbnail_.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/kSrTr93" target="_blank" class="addon-title" data-addon-name="Animal Fits">Animal Fits</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/df3e52f3-5138-46e3-9b3d-7f659f45ad97/AnimalFits_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/l2ZyQQjJ" target="_blank" class="addon-title" data-addon-name="Animal Hoodies HD">Animal Hoodies HD</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d654b832-662e-4bcb-9ed3-8eca1c1975f3/AnimalHoodiesHD_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/UtR5y9h3" target="_blank" class="addon-title" data-addon-name="Animal Life">Animal Life</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/780c6626-3b01-4044-a4f4-3d4d8130b164/Animal_Life_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/u8w2" target="_blank" class="addon-title" data-addon-name="Animal Lover">Animal Lover</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/77661e40-bdc1-4bef-81f5-b7471278d64f/AnimalLovers_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/59criuRh" target="_blank" class="addon-title" data-addon-name="Duck Teens HD">Duck Teens HD</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/8b32e6fe-47f2-4ccc-8fc7-41e02d050023/duckteensHD_Thumbnail_0.jpg" alt="duckteensHD_Thumbnail_0" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/SHAt" target="_blank" class="addon-title" data-addon-name="Couture Contrast">Couture Contrast</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/3ed8fc6a-3ab4-43f5-a6b7-9b68292113fa/Couture_Contrast_Thumbnail_0.jpg" alt="Couture Contrast" class="addon-image">
+            </div>
+        </div>
+
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/1QGJf0" target="_blank" class="addon-title" data-addon-name="Brainrot!">Brainrot!</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2f7e3cd7-a1ba-431a-bec5-294597ad8ca6/Brainrot_thumbnail_0.jpg" alt="Brainrot!" class="addon-image">
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <div id="no-results-message" class="no-results hidden">
+        No Skin Pack here
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('addon-search');
+        const addonListContainer = document.getElementById('addon-list-container');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const addonItems = document.querySelectorAll('.addon-item'); 
+        function filterAddons() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let foundResults = false;
+
+            addonItems.forEach(item => {
+                const addonName = item.querySelector('.addon-title').dataset.addonName.toLowerCase();
+                if (addonName.includes(searchTerm)) {
+                    item.style.display = 'flex'; 
+                    foundResults = true;
+                } else {
+                    item.style.display = 'none'; 
+                }
+            });
+            if (foundResults) {
+                noResultsMessage.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.remove('hidden');
+            }
+        }
+        searchInput.addEventListener('keyup', filterAddons);
+        filterAddons();
+    </script>
+</body>
+</html>

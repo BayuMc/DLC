@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedrock Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #4a90e2, #1a5276); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            overflow-y: auto;
+        }
+        
+        .back-to-home-btn {
+            background-color: #2b6cb0; 
+            color: white;
+            padding: 0.7rem 1.2rem; 
+            border-radius: 9999px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            transition: all 0.3s ease;
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        .back-to-home-btn:hover {
+            background-color: #3f72af; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); 
+        }
+        .back-to-home-btn i {
+            margin-right: 0.4rem; 
+            font-size: 1.1rem; 
+        }
+
+        .search-container {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 0.8rem 1.2rem; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); 
+            max-width: 380px; 
+            width: 100%;
+            margin-bottom: 1.5rem; 
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.4rem 0.6rem; 
+            border-radius: 0.6rem; 
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 0.95rem; 
+            transition: background-color 0.3s ease;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .search-icon {
+            margin-right: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .addon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem; 
+            max-width: 380px; 
+            width: 100%;
+            padding-bottom: 20px;
+        }
+        .addon-item {
+            background-color: #2b6cb0; 
+            border-radius: 1.2rem; 
+            padding: 1.2rem; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+        }
+        .addon-item:hover {
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); 
+        }
+        .addon-title {
+            font-size: 1.4rem; 
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem; 
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .addon-title:hover {
+            color: #60a5fa;
+        }
+        .addon-image-container {
+            width: 100%;
+            border-radius: 0.8rem; 
+            overflow: hidden;
+            margin-bottom: 0.5rem; 
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); 
+            border: 2px solid #3f72af; 
+        }
+        .addon-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .addon-tag {
+            display: none; 
+        }
+        .no-results {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2b6cb0;
+            border-radius: 1.2rem;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+        .delay-0 { animation-delay: 0s; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+    </style>
+</head>
+<body>
+    <a href="https://bayumc.github.io/DLC/" class="back-to-home-btn animate-slide-in delay-0">
+        <i class="fas fa-house"></i> Back
+    </a>
+
+    <div class="search-container animate-slide-in delay-2">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="addon-search" class="search-input" placeholder="Search">
+    </div>
+
+    <div id="addon-list-container" class="addon-list">
+        
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/94m1K" target="_blank" class="addon-title" data-addon-name="Skyblock">Skyblock</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/c8f59eb4-c330-487f-a749-f214ff45dd74/Thumbnail_0.jpg" alt="Skyblock" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/YWiZ4q" target="_blank" class="addon-title" data-addon-name="Sculk Dinosaurs">Sculk Dinosaurs</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/95e24326-4ea8-4d72-b5b7-e77f120e6ab4/SD_Thumbnail_0.jpg" alt="Sculk Dinosaurs" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Jwj8D" target="_blank" class="addon-title" data-addon-name="Project Earth">Project Earth</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5e83c1b7-e0e9-4c90-aed8-3862870c8cdc/NAME_Thumbnail_0.jpg" alt="Project Earth" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/KhcaaYrn" target="_blank" class="addon-title" data-addon-name="Prison Escape City">Prison Escape City</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/81403175-5b46-46a2-8253-d9b1fbba7b0b/PrisonEscapeCity_Thumbnail_0.jpg" alt="Prison Escape City" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/guKqLm" target="_blank" class="addon-title" data-addon-name="Portal Puzzle">Portal Puzzle</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/f16e6eb0-3db7-49a9-a91f-faa50993caea/PortalPuzzle_Thumbnail_0.jpg" alt="Portal Puzzle" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/28h0g" target="_blank" class="addon-title" data-addon-name="Parkour Volcano">Parkour Volcano</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/dc4a9c4b-93df-4b3a-b4d8-e2908ec65da7/parkourvolcano_Thumbnail_0.jpg" alt="Parkour Volcano" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/T5n22ycU" target="_blank" class="addon-title" data-addon-name="Parkour Spiral 3">Parkour Spiral 3</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/987af3cd-cadc-446a-bc87-935d110bf1d5/parkourspiral3_Thumbnail_0.jpg" alt="Parkour Spiral 3" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/1HasB" target="_blank" class="addon-title" data-addon-name="Parkour Spiral 2">Parkour Spiral 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/24731173-27a9-491b-88b8-3d600d34cc09/parkourspiral2_Thumbnail_0.jpg" alt="Parkour Spiral 2" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/ny43" target="_blank" class="addon-title" data-addon-name="Parkour Spiral 1">Parkour Spiral 1</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/d19a0610-cd20-472f-b5aa-86cd5fa3c3fc/parkourspiral_Thumbnail_0.jpg" alt="Parkour Spiral 1" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/gRjSjfO" target="_blank" class="addon-title" data-addon-name="Parkour Paradise 3">Parkour Paradise 3</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/74c1822f-57d0-404f-a5dc-8aa0c0a6d8e8/parkourparadise3_Thumbnail_0.jpg" alt="Parkour Paradise 3" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LrdmfjN" target="_blank" class="addon-title" data-addon-name="Parkour Paradise 2">Parkour Paradise 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/84e5ddfb-8a07-4183-8b4f-8e3a49e9f93c/parkourparadise_Thumbnail_0.jpg" alt="Parkour Paradise 2" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/P8ebXov" target="_blank" class="addon-title" data-addon-name="Parkour Paradise 1">Parkour Paradise 1</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/f80ab5cf-8eac-4b21-889a-853107f2a56e/parkourparadise_Thumbnail_0.jpg" alt="Parkour Paradise 1" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LAG5KRy" target="_blank" class="addon-title" data-addon-name="Pam's HarvestCraft Winter">Pam's HarvestCraft Winter</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/serviceid-18231953-4b1d-472c-a39e-48b10105b7b7-public/e6e14872-7a29-4a4e-bc15-d74ccf0b5e36/HarvestcraftWinter_Thumbnail_0.jpg" alt="Pam's HarvestCraft Winter" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/V1zB" target="_blank" class="addon-title" data-addon-name="Original One Block Challange">Original One Block Challange</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5762a350-525f-4107-94ef-f39e918cba63/OriginalOneBlockChallenge_Thumbnail_0.jpg" alt="Original One Block Challange" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/B3tr6xS" target="_blank" class="addon-title" data-addon-name="One Block Plus">One Block Plus</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/fd605db8-9bd5-4366-ac11-e4768d4ba08d/OneBlockPlus_Thumbnail_0.jpg" alt="One Block Plus" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GlLdivL" target="_blank" class="addon-title" data-addon-name="One Lucky Block">One Lucky Block</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/02f7bc2f-abeb-42b6-89a3-61b16a9e7b8c/oneluckyblock_Thumbnail_0.jpg" alt="One Lucky Block" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/5JIm6u" target="_blank" class="addon-title" data-addon-name="One Chunk Biomes">One Chunk Biomes</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/d36e609a-b193-4f35-84ef-ca2fe88e80ef/OCB_Thumbnail_0.jpg" alt="One Chunk Biomes" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GMptTuEt" target="_blank" class="addon-title" data-addon-name="One Block Ocean">One Block Ocean</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5b78f714-cc58-4027-937f-a10720ac1248/OneBlockOcean_Thumbnail_0.jpg" alt="One Block Ocean" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dcfJW" target="_blank" class="addon-title" data-addon-name="One Block Noxcrew">One Block Noxcrew</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/76072fbe-94cc-4cf9-8ae2-a5f6fba73cdf/OneBlock_Thumbnail_0.jpg" alt="One Block Noxcrew" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/MWDw9U" target="_blank" class="addon-title" data-addon-name="One Block">One Block</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/2-tail-productions-oneblock-thumbnail-50a1770726f55fd4-800.jpg" alt="One Block" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/FWgqn" target="_blank" class="addon-title" data-addon-name="Ocean Survival">Ocean Survival</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/1125a2d1-2bfc-47c7-b19d-80d062a2f335/oceansurvival_Thumbnail_0.jpg" alt="Ocean Survival" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/crnt" target="_blank" class="addon-title" data-addon-name="Ocean Challenge">Ocean Challenge</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/419dcb9b-732d-4b16-9935-8cc6b7be848a/OceanChallenge_Thumbnail_0.jpg" alt="Ocean Challenge" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/hnNgf" target="_blank" class="addon-title" data-addon-name="NYC Lower Manhattan">NYC Lower Manhattan</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/3edaad9e-9023-4560-89bd-3cb58478c65e/LowerManhattanNYC_thumbnail_0.jpg" alt="NYC Lower Manhattan" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qRooLKX" target="_blank" class="addon-title" data-addon-name="Nextbots Run">Nextbots Run</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a026eef2-4ace-40ee-993f-6389616fa185/NextbotsRun_Thumbnail_0.jpg" alt="Nextbots Run" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/LTyUBF" target="_blank" class="addon-title" data-addon-name="Nerf World">Nerf World</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/7776b9f2-f730-4632-853d-fdf6ed17c47b/nerfworld_Thumbnail_0.jpg" alt="Nerf World" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Wvkl" target="_blank" class="addon-title" data-addon-name="My Life In Sakura Shores">My Life In Sakura Shores</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/11fe0fde-ed30-4ed1-8c3e-c3c2aaaefeac/sakura_shores_Thumbnail_0.jpg" alt="My Life In Sakura Shores" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/7gZQ" target="_blank" class="addon-title" data-addon-name="Mothman">Mothman</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/07e4564e-0b33-4428-a3d5-0874a6f1370a/Mothman_Thumbnail_0.jpg" alt="Mothman" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/A0rLADH" target="_blank" class="addon-title" data-addon-name="Morph Pack 1.4">Morph Pack 1.4</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/b7f6a536-433c-49dd-864b-532d017224e4/MorphPack_Thumbnail_0.jpg" alt="Morph Pack 1.4" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/rXp8lL" target="_blank" class="addon-title" data-addon-name="More Blocks">More Blocks</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a29f03d8-45b7-4eb9-ba29-d2376b41ece6/MB_Thumbnail_0.jpg" alt="More Blocks" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/B5gLlaGD" target="_blank" class="addon-title" data-addon-name="Modern City">Modern City</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cb9bcb6e-9f18-4fc2-8c7b-b0171e7a8b19/pick_Thumbnail_0.jpg" alt="Modern City" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/alCg4bI" target="_blank" class="addon-title" data-addon-name="Modern City">Modern City</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/overtales-studio-modern-city-thumbnail-de002ac890634e65-800.jpg" alt="Modern City" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/JlhNwG" target="_blank" class="addon-title" data-addon-name="Minions">Minions</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/082464f9-01d3-49ab-8487-5c70205e7896/Minions_Thumbnail_0.jpg" alt="Minions" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/iG3yu" target="_blank" class="addon-title" data-addon-name="Minigame Island">Minigame Island</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e3af1e2f-a20b-4d84-97a7-b0afbcca66b3/minigameisland_Thumbnail_0.jpg" alt="Minigame Island" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/tj1T" target="_blank" class="addon-title" data-addon-name="Mine Zoo 2">Mine Zoo 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/317247b2-6303-4f9d-ad4a-33032987303a/Mine_Zoo_2_thumbnail_0.jpg" alt="Mine Zoo 2" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/kQ6haoX" target="_blank" class="addon-title" data-addon-name="Mega City">Mega City</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/7b3b0b8c-c954-4602-a39c-9024cbb7599f/Mega_City_thumbnail_0.jpg" alt="Mega City" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/hgdpc" target="_blank" class="addon-title" data-addon-name="Medieval Island Kingdom">Medieval Island Kingdom</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/crackedcubes-medieval-island-kingdom-thumbnail-19a2ec2df11c893e-800.jpg" alt="Medieval Island Kingdom" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/jG3Vobxf" target="_blank" class="addon-title" data-addon-name="Jurassic World">Jurassic World</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/minecraft-jurassic-world-thumbnail-05330df9200b343a-800.jpg" alt="Jurassic World" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/dSdxZoDJ" target="_blank" class="addon-title" data-addon-name="How To Train Your Dragon">How To Train Your Dragon</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/7e0cc0b6-fd6e-4f71-b96c-92464570faef/HTTYD_Thumbnail_0.jpg" alt="How To Train Your Dragon" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/33bfnJbU" target="_blank" class="addon-title" data-addon-name="Earth Survival">Earth Survival</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/4fd8bc2d-ee4c-4d93-84a0-39195a2c018c/EarthSurvival_Thumbnail_0.jpg" alt="Earth Survival" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/Knzq" target="_blank" class="addon-title" data-addon-name="The Ultimate Survival World">The Ultimate Survival World</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/81464221-2f70-4f8a-92db-ccfdc77b6804/TheUltimateSurvivalWorld_Thumbnail_0.jpg" alt="The Ultimate Survival World" class="addon-image">
+            </div>
+        </div>
+
+<div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/68KS4uj" target="_blank" class="addon-title" data-addon-name="Japanese Mountain Village">Japanese Mountain Village</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/3382c07d-0ccd-4cd0-8ee7-7a38182d1422/JMV_thumbnail_0.jpg" alt="Japanese Mountain Village" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/4dmPGUA" target="_blank" class="addon-title" data-addon-name="Tower Defense Plants Vs Mobs">Tower Defense Plants Vs Mobs</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/6874dd8a-f17f-4491-b95c-7c03f8dca5ce/TowerDefensePlantVsMobs_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/F8CM" target="_blank" class="addon-title" data-addon-name="Tinycraft">Tinycraft</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/cc7c387f-e450-4f84-a534-97d50d5c2ec9/Tinycraft_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/uZLD6O" target="_blank" class="addon-title" data-addon-name="Survival But Zombie Apocalypse">Survival But Zombie Apocalypse</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/49a5a71a-2d84-49d9-9204-afa4a3838aef/SURVIVALBUTZOMBIEAPOCALYPSE_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/0kWniK9" target="_blank" class="addon-title" data-addon-name="Survival But New Civilizations">Survival But New Civilizations</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/76453005-e248-4eaf-b0d6-9552338d45c4/SurvivalButNewCivilizations_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/3dak4PF" target="_blank" class="addon-title" data-addon-name="Star Wars Path Of The Jedi">Star Wars Path Of The Jedi</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/1d84afd1-ce2c-4212-86cc-df3f64f4d1c1/Star_Wars_Path_of_the_Jedi_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/uKuU4h" target="_blank" class="addon-title" data-addon-name="Spongebob Squarepants">Spongebob Squarepants</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5cc9b7c5-8891-43c2-87a4-f37109ae111e/SpongeBob_SquarePants_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+        
+        
+        
+        <div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/KdJo40" target="_blank" class="addon-title" data-addon-name="Zoo">Zoo</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/7c553fc8-b1e9-4057-812b-b40f405e438a/ZOO_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/bTfwY" target="_blank" class="addon-title" data-addon-name="Zoo Builder">Zoo Builder</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/fb02cfd8-2810-476d-bd33-b961150ea717/zoobuilder_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/Ki0wm" target="_blank" class="addon-title" data-addon-name="Utopia Park Theme Park">Utopia Park Theme Park</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/fde40181-1374-4af6-ba5c-60a3802b0f30/utopiapark_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/1Aou" target="_blank" class="addon-title" data-addon-name="Universal Studios Experience">Universal Studios Experience</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/1699eef8-9fc2-4d8d-a650-cecd89e29288/Universal-Studios-Experience_thumbnail_0.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+
+<div class="addon-item animate-slide-in delay-2">
+  <a href="https://sfl.gl/FfTzFt" target="_blank" class="addon-title" data-addon-name="Transformers">Transformers</a>
+  <div class="addon-image-container">
+    <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/9cdba856-3e5f-4aaf-801d-aa52d4f115ca/TF_thumbnail.jpg" alt="namagambar" class="addon-image">
+  </div>
+</div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/c9fxtg8x" target="_blank" class="addon-title" data-addon-name="Hello Kitty and Friends">Hello Kitty And Friends</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/razzleberries-hello-kitty-and-friends-thumbnail-db286ad6d0edcee6-800.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/qnRc42q" target="_blank" class="addon-title" data-addon-name="Farm Life">Farm Life</a>
+            <div class="addon-image-container">
+                <img src="https://images.bedrockexplorer.com/minecraft-marketplace-content/mine-north-farm-life-thumbnail-507ab0083e239fc9-800.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/lksVLW4V" target="_blank" class="addon-title" data-addon-name="Dungeona and Dragons a new quest">Dungeons and Dragons a new quest</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a27aecb8-36c6-4ac0-ad42-f4d2d8a0a989/Dungeons-Dragons-a-New-Quest_thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/GFTucRVK" target="_blank" class="addon-title" data-addon-name="Cherry Blossom Villa">Cherry Blossom Villa</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/eedbf2ce-e532-4740-baec-a5ee4842850f/CherryBlossomVilla_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/FgsRj9T" target="_blank" class="addon-title" data-addon-name="Castle Dracula">Castle Dracula</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/859942cf-b0dd-48dc-b69c-547f2129c67f/CastleDracula_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/MfA99M" target="_blank" class="addon-title" data-addon-name="Boba Tea Town">Boba Tea Town</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/356d7d0b-c1f0-41c3-a979-c6bad914443d/BobaTeaTown_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/gcAEMnse" target="_blank" class="addon-title" data-addon-name="Bedwars">Bedwars</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/0959f974-88c0-45f8-9c6e-c2637e1b4d8d/B_thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/IttvkDlU" target="_blank" class="addon-title" data-addon-name="Battle Mini Game">Battle Mini Game</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e8e1065c-250a-4e56-88f1-b884ca8b68a1/BattleMiniGame_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/DjO1iK8" target="_blank" class="addon-title" data-addon-name="Arena Rampage PvP">Arena Rampage PvP</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/12683ce2-7e07-4e21-a92e-b9f3ce8cdd39/Arena_Rampage_PVP_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/svWncN" target="_blank" class="addon-title" data-addon-name="Arena PvP">Arena PvP</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-20ca2/26f53125-adae-426a-9823-b8943b98fc41/ArenaPvP_Thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/y46ZmMS7" target="_blank" class="addon-title" data-addon-name="100 Days Hardcore Island">100 Days Hardcore Island</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/c69bfe02-28be-46dc-8d23-5dc034cb9473/100DaysHardcoreIsland_thumbnail_0.jpg" alt="namagambar" class="addon-image">
+            </div>
+        </div>
+        
+        <div class="addon-item animate-slide-in delay-2">
+            <a href="https://sfl.gl/vKhUNx" target="_blank" class="addon-title" data-addon-name="Mega City 2">Mega City 2</a>
+            <div class="addon-image-container">
+                <img src="https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/109759c4-c2b4-4ef7-8375-1d97dbb0cefc/Mega_City_2_thumbnail_0.jpg" alt="Mega City 2" class="addon-image">
+            </div>
+        </div>
+        
+        
+        
+    </div>
+
+    <div id="no-results-message" class="no-results hidden">
+        No Map here
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('addon-search');
+        const addonListContainer = document.getElementById('addon-list-container');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const addonItems = document.querySelectorAll('.addon-item'); 
+        function filterAddons() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let foundResults = false;
+
+            addonItems.forEach(item => {
+                const addonName = item.querySelector('.addon-title').dataset.addonName.toLowerCase();
+                if (addonName.includes(searchTerm)) {
+                    item.style.display = 'flex'; 
+                    foundResults = true;
+                } else {
+                    item.style.display = 'none'; 
+                }
+            });
+            if (foundResults) {
+                noResultsMessage.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.remove('hidden');
+            }
+        }
+        searchInput.addEventListener('keyup', filterAddons);
+        filterAddons();
+    </script>
+</body>
+</html>
